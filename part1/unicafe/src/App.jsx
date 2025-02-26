@@ -4,9 +4,19 @@ const Header = ({ heading }) => {
   return <h1>{heading}</h1>;
 };
 
-const Button = ({onClick, text}) => {
+const Button = ({ onClick, text }) => {
   return <button onClick={onClick}>{text}</button>;
 };
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  );
+};
+
 
 const Statistic = ({ good, neutral, bad }) => {
   let sum = good + neutral + bad;
@@ -19,12 +29,12 @@ const Statistic = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {sum}</p>
-      <p>average {avg}</p>
-      <p>positive {positive} %</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={sum} />
+      <StatisticLine text="average" value={avg} />
+      <StatisticLine text="positive" value={positive + "%"} />
     </div>
   );
 };
@@ -34,20 +44,20 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const handleGoodClick = () => { 
+  const handleGoodClick = () => {
     const updatedGood = good + 1;
     setGood(updatedGood);
-  }
+  };
 
-  const handleNeutralClick = () => { 
+  const handleNeutralClick = () => {
     const updatedNeutral = neutral + 1;
     setNeutral(updatedNeutral);
-  }
-  
+  };
+
   const handleBadClick = () => {
     const updatedBad = bad + 1;
     setBad(updatedBad);
-  }
+  };
 
   return (
     <div>
@@ -56,7 +66,7 @@ const App = () => {
       <Button onClick={handleNeutralClick} text="neutral" />
       <Button onClick={handleBadClick} text="bad" />
       <Header heading="statistics" />
-      <Statistic good={good} neutral={neutral} bad={ bad} />
+      <Statistic good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
