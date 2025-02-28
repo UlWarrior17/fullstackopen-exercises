@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+const Header = ({ text }) => {
+  return <h1>{text}</h1>
+}
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -35,10 +39,14 @@ const App = () => {
 
   return (
     <div>
+      <Header text="Anecdote of the day"/>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={handleVotes}>vote</button>
       <button onClick={handleNextAnecdote}>next anecdotes</button>
+      <Header text="Anecdote with most votes"/>
+      <p>{anecdotes[Object.keys(votes).reduce((a, b) => (votes[a] > votes[b] ? a : b))]}</p>
+      <p>has {votes[Object.keys(votes).reduce((a, b) => (votes[a] > votes[b] ? a : b))]} votes</p>
     </div>
   );
 };
