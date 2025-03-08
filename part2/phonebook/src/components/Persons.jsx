@@ -1,15 +1,23 @@
 import Person from "./Person";
 
-const Persons = ({ search, persons }) => {
+const Persons = ({ filter, persons, deletePerson }) => {
   return (
     <div>
-      {search
+      {filter
         ? persons
             .filter((person) =>
-              person.name.toLowerCase().includes(search.toLowerCase())
+              person.name.toLowerCase().includes(filter.toLowerCase())
             )
-            .map((person) => <Person key={person.id} person={person} />)
-        : persons.map((person) => <Person key={person.id} person={person} />)}
+            .map((person) => (
+              <div key={person.id}>
+                <Person person={person} />
+              </div>
+            ))
+        : persons.map((person) => (
+            <div key={person.id}>
+              <Person person={person} deletePerson={deletePerson}/>
+            </div>
+          ))}
     </div>
   );
 };

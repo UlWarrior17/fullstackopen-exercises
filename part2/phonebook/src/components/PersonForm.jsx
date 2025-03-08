@@ -1,12 +1,6 @@
 const PersonForm = (props) => {
   return (
-    <form
-      onSubmit={
-        props.persons.find((person) => person.name === props.newName)
-          ? alert(`${props.newName} is already added to phonebook`)
-          : props.addPerson
-      }
-    >
+    <form onSubmit={props.addPerson}>
       <div>
         name: <input value={props.newName} onChange={props.handleNameChange} />
       </div>
