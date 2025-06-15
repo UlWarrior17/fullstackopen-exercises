@@ -4,16 +4,16 @@ import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import personService from "./services/persons";
 
-const Notification = ({ message, type}) => {
+const Notification = ({ message, type }) => {
   const errorStyle = {
-    color: 'red',
-    background: 'lightgrey',
+    color: "red",
+    background: "lightgrey",
     fontSize: 20,
-    borderStyle: 'solid',
+    borderStyle: "solid",
     borderRadius: 5,
     padding: 10,
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  };
 
   const successStyle = {
     color: "green",
@@ -72,14 +72,14 @@ const App = () => {
             })
             .catch((error) => {
               console.log(error.message);
-              
+
               setErrorMessage(
                 `Information of ${updatedPerson} has already been removed from server`
               );
               setTimeout(() => {
                 setErrorMessage(null);
               }, 5000);
-              setPersons(persons.filter(p => p.id !== updatedPerson.id))
+              setPersons(persons.filter((p) => p.id !== updatedPerson.id));
             });
           setNewName("");
           setNewNumber("");
@@ -92,15 +92,23 @@ const App = () => {
       return;
     }
 
-    personService.create(personObject).then((returnPerson) => {
-      setPersons(persons.concat(returnPerson));
-      setNewName("");
-      setNewNumber("");
-    });
-    setSuccessMessage(`Added ${personObject.name}`);
-    setTimeout(() => {
-      setSuccessMessage(null);
-    }, 5000);
+    personService
+      .create(personObject)
+      .then((returnPerson) => {
+        setPersons(persons.concat(returnPerson));
+        setNewName("");
+        setNewNumber("");
+        setSuccessMessage(`Added ${personObject.name}`);
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 5000);
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.error);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+      });
   };
 
   const deletePerson = (id) => {
